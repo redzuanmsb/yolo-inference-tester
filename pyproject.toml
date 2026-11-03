@@ -1,0 +1,43 @@
+[project]
+name = "yolo-inference-tester"
+version = "0.1.0"
+description = "A desktop tester for Ultralytics YOLO models on CPU or Intel iGPU"
+readme = "README.md"
+requires-python = "==3.11.*"
+dependencies = [
+    "lap>=0.5.12,<0.6",
+    "numpy>=1.26,<3",
+    "opencv-python>=4.10,!=4.13.0.90,<5",
+    "openvino>=2025.2,<2027",
+    "pyside6>=6.8,<7",
+    "torch>=2.6,<3",
+    "torchvision>=0.21,<1",
+    "ultralytics>=8.4.198,<9",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+torchvision = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["integration: exercises real Ultralytics inference and model conversion"]
